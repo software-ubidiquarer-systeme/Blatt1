@@ -1,0 +1,17 @@
+#ifndef CHECK_WDT_RESET_AH
+#define CHECK_WDT_RESET_AH
+
+#ifdef TI_COMPILER
+#include "system.h"
+
+aspect CheckWDTReset {
+  advice execution("% main()") : before() {
+    check_wdt_reset();
+  }
+
+  // highest precedence:
+  advice execution("% main()") : order("CheckWDTReset", !"CheckWDTReset");
+};
+
+#endif
+#endif

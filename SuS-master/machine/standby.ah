@@ -1,0 +1,19 @@
+#ifndef __STANDBY_MODE_AH__
+#define __STANDBY_MODE_AH__
+
+/* Aspekt um den normalen Systemstart nach dem Bootloader zu verhindern
+   und in einen Stromsparmodus zu wechseln */
+
+#include "machine/standby.h"
+
+aspect GotoSleepMode {
+  advice execution("% main()") : before() {
+    // In den Schlafmodus nach Start wechseln
+    StandbyMode::instance().activate();
+    // Methode kehrt bei Druecken des Lichtbuttons zurueck und die normale
+    // main wird ausgefuehrt.
+  }
+};
+
+#endif /* __STANDBY_MODE_AH__ */
+

@@ -1,0 +1,16 @@
+#ifndef BEEPER_AH
+#define BEEPER_AH
+
+/* Aspekt zum Einbinden der Beepers */
+
+#include "machine/beeper.h"
+
+aspect ActivateBeeper {
+  advice execution("bool Timer::prologue()") && result(res) : after(bool res) {
+    if (res) {
+      Beeper::instance().check();
+    }
+  }
+};
+
+#endif
